@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import eye from "../../assets/Eye.svg";
 import eyeGreen from "../../assets/greenEye.svg";
-import { Container, PriceType } from "../elements";
+import { Container, formatNumber, PriceType } from "../elements";
 import { useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
@@ -261,7 +261,7 @@ function Table({ data }) {
                             </TableImgText>
                           </TableCell>
                           <TableBodyPrice>
-                            {PriceType(type)} {el.current_price.toFixed(2)}
+                            {PriceType(type)} {formatNumber(el.current_price.toFixed(2))}
                           </TableBodyPrice>
                           <td>
                             <TablePercentage>
@@ -281,7 +281,7 @@ function Table({ data }) {
                           <TableBodyPrice>
                             {" "}
                             {PriceType(type)}
-                            {el.market_cap.toString().slice(0, -6)}M
+                            {formatNumber(el.market_cap.toString().slice(0, -6))}M
                           </TableBodyPrice>
                         </TableRow>
                       );

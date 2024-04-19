@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../components/loader";
 import styled from "@emotion/styled";
-import { PriceType, radioButtons } from "../../components/elements";
+import { formatNumber, PriceType, radioButtons } from "../../components/elements";
 import { DataContext } from "../../App";
 import LinearDimensions from "../../components/chart";
 import parse from "html-react-parser";
@@ -153,7 +153,7 @@ function ProductDetail() {
               <h3>Current Price :</h3>
               <span>
                 {PriceType(type)}
-                {product?.market_data?.market_cap[type]}
+                {formatNumber(product?.market_data?.market_cap[type])}
               </span>
             </DetailText>
 
@@ -161,7 +161,7 @@ function ProductDetail() {
               <h3> Market Cap :</h3>{" "}
               <span>
                 {PriceType(type)}
-                {product?.market_data?.current_price[type]}
+                {formatNumber(product?.market_data?.current_price[type])}
               </span>
             </DetailText>
           </DetailWrapper>

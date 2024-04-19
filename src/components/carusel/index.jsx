@@ -1,7 +1,7 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Container, PriceType } from "../elements";
+import { Container, formatNumber, PriceType } from "../elements";
 import styled from "@emotion/styled";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -110,7 +110,7 @@ const Carusel = ({ data }) => {
                   </SliderTitle>
                   <SliderPrice>
                     {" "}
-                    {PriceType(type)} {el.current_price.toFixed(2)}
+                    {PriceType(type)} {formatNumber(el.current_price.toFixed(2))}
                   </SliderPrice>
                 </SliderItem>
               );
