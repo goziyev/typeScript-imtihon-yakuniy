@@ -11,9 +11,11 @@ const Wrapper = styled.div`
   display: flex;
   max-width: 1880px;
   width: 100%;
-  gap: 10px;
+  gap: 30px;
   margin: 25px auto 50px;
-  justify-content: space-between;
+  @media screen and (max-width: 1400px) {
+    justify-content: space-between;
+  }
 `;
 
 const DetailWrapper = styled.div`

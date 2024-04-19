@@ -11,10 +11,10 @@ import Loader from "../loader";
 const LinearDimensions = ({ id, days }) => {
   const [type, setType] = useContext(DataContext);
   const [product, setProduct] = useState([]);
-  const [show, setShow] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   const fetchData = async () => {
-    setShow(true);
+    setLoader(true);
     try {
       const response = await fetch(
         `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=${type}&days=${days}`
@@ -22,11 +22,10 @@ const LinearDimensions = ({ id, days }) => {
 
       const b = await response.json();
       setProduct(b.prices);
-      setShow(false);
+      setLoader(false);
       console.log(b, product);
     } catch (error) {
       console.error("Chart componentda hatolik keldi :", error);
-      setShow(false);
     }
   };
 
@@ -35,7 +34,8 @@ const LinearDimensions = ({ id, days }) => {
   }, [days]);
 
   const Container = styled.div`
-    width: 75%;
+    max-width: 1292px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -56,7 +56,7 @@ const LinearDimensions = ({ id, days }) => {
   return (
     <ThemeProvider theme={darkTheme}>
       <Container>
-        {!product || show ? (
+        {!product || loader ? (
           <Loader />
         ) : (
           <>
