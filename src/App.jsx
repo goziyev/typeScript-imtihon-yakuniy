@@ -9,8 +9,12 @@ export const DataContext = createContext();
 
 function App() {
   const [type, setType] = useState(localStorage.getItem("type") || "usd");
+  const [listItems, setItems] = useState(
+    JSON.parse(localStorage.getItem("cardData")) || []
+  );
+  console.log(listItems, 15);
   return (
-    <DataContext.Provider value={[type, setType]}>
+    <DataContext.Provider value={[type, setType, listItems, setItems]}>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />

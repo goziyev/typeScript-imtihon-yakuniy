@@ -3,7 +3,8 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
 import styled from "@emotion/styled";
-import { useLocation } from "react-router-dom";
+import { DataContext } from "../../App";
+import { useContext, useEffect } from "react";
 
 const Button = styled.button`
   padding: 8px 18px;
@@ -76,18 +77,12 @@ const ModalItem = styled.div`
 `;
 
 export default function AnchorTemporaryDrawer() {
-  const location = useLocation();
   const [state, setState] = React.useState({
     right: false,
   });
-  const [data, setData] = React.useState(
-    JSON.parse(localStorage.getItem("cardData")) || []
-  );
-  React.useEffect(() => {
-    if (localStorage.getItem("cardData")) {
-      setData(JSON.parse(localStorage.getItem("cardData")));
-    }
-  }, [location.pathname]);
+  const [type, setType, listItems, setItems] = useContext(DataContext);
+
+  console.log(listItems);
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event.type === "keydown" &&
@@ -100,19 +95,23 @@ export default function AnchorTemporaryDrawer() {
   };
 
   const updateData = (newData) => {
-    setData(newData);
+    setItems(newData);
     localStorage.setItem("cardData", JSON.stringify(newData));
   };
 
   const removeItem = (index) => {
-    const newData = [...data];
+    const newData = [...listItems];
     newData.splice(index, 1);
     updateData(newData);
   };
-
+ 
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 511 }}
+      sx={{
+        width: anchor === "top" || anchor === "bottom" ? "auto" : 511,
+        background: "#515151",
+        minHeight: "100vh",
+      }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
@@ -120,8 +119,8 @@ export default function AnchorTemporaryDrawer() {
       <Divider />
       <ListTitle>WATCHLIST</ListTitle>
       <ModalItemsWrapper>
-        {data.length > 0 ? (
-          data.map((el, index) => (
+        {listItems.length > 0 ? (
+          listItems.map((el, index) => (
             <ModalItem key={index}>
               <img src={el.image} alt="" width={120} />
               <p>₹{el.current_price}</p>

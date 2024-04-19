@@ -164,10 +164,10 @@ const StyledPaginaiton = styled(PaginationItem)`
 `;
 
 function Table({ data }) {
-  const storedData = JSON.parse(localStorage.getItem("cardData")) || [];
+  const [type, setType, listItems, setItems] = useContext(DataContext);
+  let storedData = listItems;
   const [elements, setData] = useState(data);
   const [loader, setLoader] = useState(false);
-  const [type, setType] = useContext(DataContext);
   async function GetApi(e = 1) {
     setLoader(true);
     try {
@@ -185,6 +185,7 @@ function Table({ data }) {
   useEffect(() => {
     GetApi();
   }, [type]);
+
   function handleNavigate(elId, element) {
     if (elId) {
       const isDataExists = storedData.some((item) => item.id === elId);
@@ -192,8 +193,10 @@ function Table({ data }) {
         navigate(`crypto/${elId}`);
         return;
       }
+
       const updatedData = [...storedData, element];
       localStorage.setItem("cardData", JSON.stringify(updatedData));
+      setItems(updatedData);
       navigate(`crypto/${elId}`);
     } else {
       alert("Malumotlar yetarli emas iltimos qayatdan urining");

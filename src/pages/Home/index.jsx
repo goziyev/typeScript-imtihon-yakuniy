@@ -34,12 +34,10 @@ const CaruselDesc = styled.p`
   margin-bottom: 40px;
 `;
 
-
 function Home() {
   const [products, setProducts] = useState([]);
   const [loader, setLoader] = useState(true);
-  const [type,setType] =  useContext(DataContext)
-
+  const [type, setType, listItems, setItems] = useContext(DataContext);
   async function GetApi(e = 1) {
     setLoader(true);
     try {
